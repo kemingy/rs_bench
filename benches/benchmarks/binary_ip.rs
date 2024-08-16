@@ -1,4 +1,4 @@
-#[allow(dead_code)]
+#![allow(dead_code)]
 use criterion::{criterion_group, BenchmarkId, Criterion};
 use rand::{thread_rng, Rng};
 

@@ -1,7 +1,8 @@
 use criterion::{criterion_group, BenchmarkId, Criterion};
 use num_traits::Float;
 use rand::{thread_rng, Rng};
-use rs_binary_ip_simd::float32::F32;
+
+use rs_bench::float32::F32;
 
 pub fn quantize_15(lut: &[F32]) -> (F32, F32, Vec<u8>) {
     let min = lut.iter().copied().fold(F32::infinity(), std::cmp::min);
