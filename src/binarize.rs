@@ -21,7 +21,7 @@ pub unsafe fn vector_binarize_avx2(vec: &[u8]) -> Vec<u64> {
     let mut binary = vec![0u64; length * THETA_LOG_DIM as usize / 64];
 
     for i in (0..length).step_by(32) {
-        let mut v = _mm256_load_si256(ptr);
+        let mut v = _mm256_loadu_si256(ptr);
         ptr = ptr.add(1);
         v = _mm256_slli_epi32(v, 4);
         for j in 0..THETA_LOG_DIM as usize {
@@ -41,14 +41,10 @@ fn test_binarize() {
     use rand::{thread_rng, Rng};
 
     let mut rng = thread_rng();
-    for size in [128].into_iter() {
+    for size in [128, 256, 512, 1024].into_iter() {
         let vec: Vec<u8> = (0..size).map(|_| rng.gen::<u8>()).collect();
         assert_eq!(query_vector_binarize(&vec), unsafe {
             vector_binarize_avx2(&vec)
         });
     }
-    // let vec: Vec<u8> = (0..128).map(|_| rng.gen::<u8>()).collect();
-    // assert_eq!(query_vector_binarize(&vec), unsafe {
-    //     vector_binarize_avx2(&vec)
-    // });
 }
