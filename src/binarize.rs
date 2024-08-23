@@ -2,6 +2,7 @@
 
 const THETA_LOG_DIM: u32 = 4;
 
+#[inline]
 pub fn query_vector_binarize(vec: &[u8]) -> Vec<u64> {
     let length = vec.len();
     let mut binary = vec![0u64; length * THETA_LOG_DIM as usize / 64];
@@ -13,6 +14,7 @@ pub fn query_vector_binarize(vec: &[u8]) -> Vec<u64> {
     binary
 }
 
+#[inline]
 pub unsafe fn vector_binarize_avx2(vec: &[u8]) -> Vec<u64> {
     use std::arch::x86_64::*;
 
