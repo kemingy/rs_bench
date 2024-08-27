@@ -1,5 +1,3 @@
-use num_traits::{Float, Zero};
-
 use std::cmp::Ordering;
 use std::fmt::{Debug, Display};
 use std::hash::{Hash, Hasher};
@@ -7,6 +5,8 @@ use std::iter::Sum;
 use std::num::ParseFloatError;
 use std::ops::*;
 use std::str::FromStr;
+
+use num_traits::{Float, Zero};
 
 #[derive(Clone, Copy, Default)]
 #[repr(transparent)]

@@ -1,6 +1,5 @@
 use criterion::{criterion_group, BenchmarkId, Criterion};
 use rand::{thread_rng, Rng};
-
 use rs_bench::minmax::{min_max, min_max_avx};
 
 pub fn min_max_benchmark(c: &mut Criterion) {

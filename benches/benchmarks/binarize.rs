@@ -1,6 +1,5 @@
 use criterion::{criterion_group, BenchmarkId, Criterion};
 use rand::{thread_rng, Rng};
-
 use rs_bench::binarize::{query_vector_binarize, vector_binarize_avx2};
 
 pub fn binarize_benchmark(c: &mut Criterion) {
