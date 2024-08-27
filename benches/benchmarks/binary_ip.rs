@@ -6,7 +6,10 @@ const THETA_LOG_DIM: u32 = 4;
 
 #[inline]
 fn binary_dot_product(x: &[u64], y: &[u64]) -> u32 {
-    // x.iter().zip(y.iter()).map(|(a, b)| (a & b).count_ones()).sum()
+    // x.iter()
+    //     .zip(y.iter())
+    //     .map(|(a, b)| (a & b).count_ones())
+    //     .sum()
     // assert!(x.len() == y.len());
     let mut res = 0;
     for i in 0..x.len() {
@@ -96,6 +99,26 @@ pub fn asymmetric_binary_ip_simd(x: &[u64], y: &[u64]) -> u32 {
     res
 }
 
+#[inline]
+fn binary_ip_popcnt(x: &[u64], y: &[u64]) -> u32 {
+    let mut res = 0;
+    for i in 0..x.len() {
+        res += popcnt::count_ones(bytemuck::bytes_of(&(x[i] & y[i])));
+    }
+    res as u32
+}
+
+pub fn asymmetric_binary_ip_popcnt(x: &[u64], y: &[u64]) -> u32 {
+    let mut res = 0;
+    let length = x.len();
+    let mut ys = y;
+    for i in 0..THETA_LOG_DIM as usize {
+        res += binary_ip_popcnt(x, ys) << i;
+        ys = &ys[length..];
+    }
+    res as u32
+}
+
 #[test]
 fn test_binary_dot_product() {
     let x = vec![
@@ -119,8 +142,13 @@ pub fn binary_ip_benchmark(c: &mut Criterion) {
             .collect::<Vec<u64>>();
         group.bench_with_input(
             BenchmarkId::from_parameter(size * 64),
-            &(x, y),
+            &(&x, &y),
             |b, input| b.iter(|| asymmetric_binary_dot_product(&input.0, &input.1)),
+        );
+        group.bench_with_input(
+            BenchmarkId::new("popcnt", size * 64),
+            &(&x, &y),
+            |b, input| b.iter(|| asymmetric_binary_ip_popcnt(&input.0, &input.1)),
         );
     }
     group.finish();

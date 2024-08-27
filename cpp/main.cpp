@@ -1,13 +1,16 @@
+#include <cstdint>
 #include <vector>
 #include <iostream>
 #include <stdint.h>
 #include <random>
 #include <benchmark/benchmark.h>
 
+const int base = 16;
+// const int base = 4;
 
 inline uint32_t ip_bin(uint64_t *x, uint64_t *y) {
     uint64_t ret = 0;
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < base; i++) {
         ret += __builtin_popcountll(x[i] & y[i]);
     }
     return ret;
@@ -17,9 +20,9 @@ uint32_t ip_byte_bin(uint64_t *x, uint64_t *y) {
     uint64_t ret = 0;
     for (int i = 0; i < 4; i++) {
         ret += ip_bin(x, y) << i;
-        y += 16;
+        y += base;
     }
-    return ret;   
+    return ret;
 }
 
 static void BM_IP_BIN(benchmark::State& state) {
@@ -37,9 +40,18 @@ static void BM_IP_BIN(benchmark::State& state) {
         z[i] = rng();
     }
 
+    uint64_t* a;
+    uint64_t* b;
+    if (base == 4) {
+        a = x;
+        b = y;
+    } else if (base == 16) {
+        a = y;
+        b = z;
+    }
+
     for (auto _ : state) {
-        // benchmark::DoNotOptimize(ip_byte_bin(x, y));
-        benchmark::DoNotOptimize(ip_byte_bin(y, z));
+        benchmark::DoNotOptimize(ip_byte_bin(a, b));
     }
 }
 
