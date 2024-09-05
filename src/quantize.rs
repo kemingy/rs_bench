@@ -18,6 +18,23 @@ pub fn quantize_scalar(
 }
 
 #[inline]
+pub fn quantize_scalar_round(
+    vec: &[f32],
+    _bias: &[f32],
+    lower_bound: f32,
+    multiplier: f32,
+) -> (u32, Vec<u8>) {
+    let mut sum = 0u32;
+    let mut quantized = vec![0u8; vec.len()];
+    for i in 0..vec.len() {
+        let q = ((vec[i] - lower_bound) * multiplier).round() as u8;
+        quantized[i] = q;
+        sum += q as u32;
+    }
+    (sum, quantized)
+}
+
+#[inline]
 unsafe fn sum_m256i(sum256: __m256i) -> i32 {
     // add [4..7] to [0..3]
     let mut combined = _mm256_add_epi32(sum256, _mm256_permute2f128_si256(sum256, sum256, 1));

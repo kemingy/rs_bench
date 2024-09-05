@@ -5,6 +5,8 @@
 #include <random>
 #include <benchmark/benchmark.h>
 
+#define PORTABLE_ALIGN32 __attribute__((aligned(32)))
+
 const int base = 16;
 // const int base = 4;
 
@@ -26,9 +28,9 @@ uint32_t ip_byte_bin(uint64_t *x, uint64_t *y) {
 }
 
 static void BM_IP_BIN(benchmark::State& state) {
-    uint64_t x[4];
-    uint64_t y[16];
-    uint64_t z[64];
+    uint64_t PORTABLE_ALIGN32 x[4];
+    uint64_t PORTABLE_ALIGN32 y[16];
+    uint64_t PORTABLE_ALIGN32 z[64];
     std::mt19937_64 rng;
     for (int i = 0; i < 4; i++) {
         x[i] = rng();
