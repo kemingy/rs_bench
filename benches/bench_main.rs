@@ -7,4 +7,5 @@ criterion_main! {
     benchmarks::quantize::quantize,
     benchmarks::binarize::binarize,
     benchmarks::minmax::minmax,
+    benchmarks::f32_cmp::f32_cmp,
 }
