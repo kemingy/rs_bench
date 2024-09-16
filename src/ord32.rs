@@ -21,7 +21,7 @@ impl From<f32> for Ord32 {
     }
 }
 
-#[derive(Debug, Clone, Copy, Default, PartialEq, PartialOrd)]
+#[derive(Debug, Clone, Copy, Default, PartialEq)]
 #[repr(transparent)]
 pub struct OrdF32(f32);
 
@@ -34,7 +34,15 @@ impl From<f32> for OrdF32 {
 
 impl Eq for OrdF32 {}
 
+impl PartialOrd for OrdF32 {
+    #[inline]
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
+}
+
 impl Ord for OrdF32 {
+    #[inline]
     fn cmp(&self, other: &Self) -> Ordering {
         self.0.total_cmp(&other.0)
     }
