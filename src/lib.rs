@@ -7,4 +7,5 @@ pub mod binary_ip;
 pub mod float32;
 pub mod minmax;
 pub mod ord32;
+pub mod projection;
 pub mod quantize;

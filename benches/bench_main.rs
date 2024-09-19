@@ -8,4 +8,5 @@ criterion_main! {
     benchmarks::binarize::binarize,
     benchmarks::minmax::minmax,
     benchmarks::f32_cmp::f32_cmp,
+    benchmarks::projection::project,
 }

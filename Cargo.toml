@@ -10,6 +10,7 @@ lto = true
 
 [dependencies]
 bytemuck = "1.17.0"
+faer = { version = "0.19.3", default-features = false, features = ["std"] }
 num-traits = "0.2.19"
 popcnt = "0.1.0"
 
