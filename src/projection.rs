@@ -45,7 +45,7 @@ pub unsafe fn vector_dot_product(lhs: &ColRef<f32>, rhs: &ColRef<f32>) -> f32 {
         rhs_ptr = rhs_ptr.add(8);
     }
 
-    #[inline]
+    #[inline(always)]
     unsafe fn reduce_f32_256(accumulate: __m256) -> f32 {
         // add [4..7] to [0..3]
         let mut combined = _mm256_add_ps(

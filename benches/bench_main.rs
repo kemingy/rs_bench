@@ -9,4 +9,5 @@ criterion_main! {
     benchmarks::minmax::minmax,
     benchmarks::f32_cmp::f32_cmp,
     benchmarks::projection::project,
+    benchmarks::norm::norm,
 }
