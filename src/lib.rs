@@ -10,3 +10,4 @@ pub mod norm;
 pub mod ord32;
 pub mod projection;
 pub mod quantize;
+pub mod l2;
