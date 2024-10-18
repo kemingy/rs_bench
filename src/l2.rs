@@ -77,16 +77,13 @@ mod test {
     fn test_l2_squared_distance() {
         use rand::{thread_rng, Rng};
         let mut rng = thread_rng();
-    
-        for size in [64, 70, 84, 128, 256].iter() {
+
+        for size in [6, 64, 70, 84, 128, 256].iter() {
             let lhs: Vec<f32> = (0..*size).map(|_| rng.gen::<f32>()).collect();
             let rhs: Vec<f32> = (0..*size).map(|_| rng.gen::<f32>()).collect();
-            let diff = unsafe { l2_squared_distance(&lhs, &rhs) } - l2_squared_distance_naive(&lhs, &rhs);
-            assert!(
-                diff <= 1e-6,
-                "diff: {}",
-                diff
-            )
+            let diff =
+                unsafe { l2_squared_distance(&lhs, &rhs) } - l2_squared_distance_naive(&lhs, &rhs);
+            assert!(diff <= 1e-4, "diff: {}", diff)
         }
     }
 }

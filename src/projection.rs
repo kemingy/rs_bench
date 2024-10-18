@@ -70,16 +70,21 @@ pub unsafe fn vector_dot_product(lhs: &ColRef<f32>, rhs: &ColRef<f32>) -> f32 {
     sum
 }
 
-#[test]
-fn test_vector_projection() {
-    use faer::Mat;
+#[cfg(test)]
+mod test {
+    use super::*;
 
-    let vec = Col::from_fn(3, |i| i as f32);
-    let orthogonal = Mat::<f32>::identity(3, 3);
-    let faer_res = vec_projection(&vec.as_ref(), &orthogonal.as_ref());
-    let simd_res = vec_projection_simd(&vec.as_ref(), &orthogonal.as_ref());
-    for i in 0..3 {
-        // should be exact equal
-        assert_eq!(faer_res[i], simd_res[i]);
+    #[test]
+    fn test_vector_projection() {
+        use faer::Mat;
+
+        let vec = Col::from_fn(3, |i| i as f32);
+        let orthogonal = Mat::<f32>::identity(3, 3);
+        let faer_res = vec_projection(&vec.as_ref(), &orthogonal.as_ref());
+        let simd_res = vec_projection_simd(&vec.as_ref(), &orthogonal.as_ref());
+        for i in 0..3 {
+            // should be exact equal
+            assert_eq!(faer_res[i], simd_res[i]);
+        }
     }
 }

@@ -5,9 +5,9 @@
 pub mod binarize;
 pub mod binary_ip;
 pub mod float32;
+pub mod l2;
 pub mod minmax;
 pub mod norm;
 pub mod ord32;
 pub mod projection;
 pub mod quantize;
-pub mod l2;
