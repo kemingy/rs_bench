@@ -28,13 +28,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-      with:
-        toolchain: nightly
     - name: Install lint tools
       run: rustup component add rustfmt clippy
     - name: Lint
       run: |
-        cargo fmt -- --check
+        cargo fmt --check
 
   test:
     strategy:
@@ -44,8 +42,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: dtolnay/rust-toolchain@stable
-      with:
-        toolchain: nightly
     - name: Test
       run: cargo test
   
