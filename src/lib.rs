@@ -2,6 +2,8 @@ pub mod align;
 pub mod binarize;
 pub mod binary_ip;
 pub mod l2;
+#[cfg(feature = "linear-map")]
+pub mod linear;
 pub mod minmax;
 pub mod norm;
 pub mod ord32;

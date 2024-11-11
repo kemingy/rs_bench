@@ -1,6 +1,8 @@
 pub mod binarize;
 pub mod binary_ip;
 pub mod f32_cmp;
+#[cfg(feature = "linear-map")]
+pub mod linear;
 pub mod minmax;
 pub mod norm;
 pub mod projection;
