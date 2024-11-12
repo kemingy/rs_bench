@@ -1,7 +1,9 @@
 pub mod binarize;
 pub mod binary_ip;
 pub mod f32_cmp;
-#[cfg(feature = "linear-map")]
+#[cfg(feature = "hash")]
+pub mod hash;
+#[cfg(feature = "linear")]
 pub mod linear;
 pub mod minmax;
 pub mod norm;
