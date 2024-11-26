@@ -41,13 +41,8 @@ pub const CACHELINE_ALIGN: usize = {
 };
 
 #[inline(always)]
-pub fn is_vectorizable<T: 'static>() -> bool {
-    core::mem::size_of::<T>() % 8 == 0
-}
-
-#[inline(always)]
 pub fn align_for<T: 'static>() -> usize {
-    if is_vectorizable::<T>() {
+    if core::mem::size_of::<T>() % 8 == 0 {
         Ord::max(
             core::mem::size_of::<T>(),
             Ord::max(core::mem::align_of::<T>(), CACHELINE_ALIGN),
